@@ -1,36 +1,54 @@
 import React from "react";
-import ReactHlsPlayer from "react-hls-player";
-import {LINKS} from "../../const.js";
-// import Hls from "hls.js";
-// import ReactHLS from 'react-hls';
+import Hls from "hls.js";
+
+import "./player.scss";
 
 class Player extends React.PureComponent {
   constructor(props) {
     super(props);
+
+    this.videoRef = React.createRef();
   }
 
   componentDidMount() {
+    this._playVideo();
   }
 
-  _onTouchInsidePlayer() {
-    if (this.player.paused) {
-      this.player.play();
-    } else {
-      this.player.pause();
+  componentDidUpdate() {
+    this._playVideo();
+  }
+
+  _playVideo() {
+    const {activeLink} = this.props;
+
+    if (Hls.isSupported()) {
+      const video = this.videoRef.current;
+      const hls = new Hls();
+      // bind them together
+      hls.attachMedia(video);
+      hls.on(Hls.Events.MEDIA_ATTACHED, function () {
+        console.log(`video and hls.js are now bound together !`);
+        hls.loadSource(activeLink);
+        hls.on(Hls.Events.MANIFEST_PARSED, function (event, data) {
+          console.log(
+              `manifest loaded, found ` + data.levels.length + ` quality level`
+          );
+        });
+      });
+      video.controls = true;
+      video.play();
     }
   }
 
   render() {
     return (
       <div className={`play-view_palyer player`}>
-        {/* <video id="video" src={`${LINKS[0]}`} width="100%" autoPlay={true}></video> */}
-        <ReactHlsPlayer
-          url='https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8'
-          autoplay={false}
-          controls={true}
-          width={500}
-          height={375}
-        />
+        <video
+          ref={this.videoRef}
+          id="video"
+          width="768"
+          height="512"
+        ></video>
       </div>
     );
   }

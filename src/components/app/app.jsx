@@ -1,14 +1,15 @@
 import React from "react";
 import {connect} from "react-redux";
-import {getAuthStatus} from "../../reducer/state/selectors";
-// import {Operation as StateOperation} from "../../reducer/state/state.js";
-import {ActionCreator} from "../../reducer/state/state.js";
 import PropTypes from "prop-types";
+
 import PlayView from "../play-view/play-view.jsx";
+
+import {getAuthStatus} from "../../reducer/state/selectors";
+import {ActionCreator} from "../../reducer/state/state.js";
+
 import './app.scss';
 
 const App = (props) => {
-  console.log(props);
   const {authStatus, toggleAuthStatus} = props;
   return (
     <>

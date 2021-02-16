@@ -1,0 +1,26 @@
+.links {
+  margin: 0;
+  padding: 0;
+}
+
+.links__item {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.links__input {
+  font-size: 30px;
+  color: white;
+  padding: 15px;
+  // width: 100%;
+  border: 1px solid white;
+  background-color: #212121;
+}
+
+.links__btn {
+  font-size: 30px;
+  color: #212121;
+  padding: 15px;
+  border: 1px solid white;
+  background-color: white;
+}

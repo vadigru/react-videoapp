@@ -1,9 +1,24 @@
+.play-view {
+  width: 768px;
+  outline: 2px solid orangered;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .menu {
+  margin: 0;
+  padding: 0;
   display: flex;
 }
 
 .menu__item {
-  cursor: pointer;
+  margin: 0;
+  padding: 0;
   list-style-type: none;
-  margin: 25px;
+  cursor: pointer;
+  &:first-child {
+    margin-right: 25px;
+  }
 }
