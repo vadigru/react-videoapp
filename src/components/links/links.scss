@@ -1,14 +1,30 @@
+.play-links {
+  width: 100%;
+}
+
 .links {
+  width: 100%;
   margin: 0;
   padding: 0;
 }
 
+.links__label {
+  font-size: 40px;
+  color: #212121;
+  padding: 10px 25px;
+  background-color: white;
+}
+
 .links__item {
+  width: 100%;
   display: flex;
+  justify-content: center;
+  align-items: center;
   margin-bottom: 20px;
 }
 
 .links__input {
+  width: 81%;
   font-size: 30px;
   color: white;
   padding: 15px;

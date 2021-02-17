@@ -4,13 +4,15 @@ import {
 } from "../../const.js";
 
 const initialState = {
-  UNAUTHORIZED: false,
+  unauthorized: false,
+  links: LINKS,
   activeLink: LINKS[0]
 };
 
 const ActionType = {
   TOGGLE_AUTH_STATUS: `TOGGLE_AUTH_STATUS`,
-  TOGGLE_ACTIVE_LINK: `TOGGLE_ACTIVE_LINK`
+  TOGGLE_ACTIVE_LINK: `TOGGLE_ACTIVE_LINK`,
+  SET_LINKS: `SET_LINKS`
 };
 
 const ActionCreator = {
@@ -22,17 +24,25 @@ const ActionCreator = {
     type: ActionType.TOGGLE_ACTIVE_LINK,
     payload: link,
   }),
+  setLinks: (links) => ({
+    type: ActionType.SET_LINKS,
+    payload: links,
+  }),
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case ActionType.TOGGLE_AUTH_STATUS:
       return extend(state, {
-        UNAUTHORIZED: action.payload,
+        unauthorized: action.payload,
       });
     case ActionType.TOGGLE_ACTIVE_LINK:
       return extend(state, {
         activeLink: action.payload,
+      });
+    case ActionType.SET_LINKS:
+      return extend(state, {
+        links: action.payload,
       });
   }
   return state;

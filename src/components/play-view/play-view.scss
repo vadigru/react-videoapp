@@ -1,16 +1,21 @@
 .play-view {
   width: 768px;
-  outline: 2px solid orangered;
+  height: 100vh;
+  // outline: 2px solid orangered;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
 }
 
 .menu {
+  position: relative;
+  width: 100%;
   margin: 0;
   padding: 0;
   display: flex;
+  justify-content: space-evenly;
+  border-bottom: 2px solid white;
 }
 
 .menu__item {
@@ -21,4 +26,5 @@
   &:first-child {
     margin-right: 25px;
   }
+
 }

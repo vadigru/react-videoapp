@@ -2,6 +2,8 @@ import React from "react";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 
+
+import AuthView from "../auth-view/auth-view.jsx";
 import PlayView from "../play-view/play-view.jsx";
 
 import {getAuthStatus} from "../../reducer/state/selectors";
@@ -13,10 +15,8 @@ const App = (props) => {
   const {authStatus, toggleAuthStatus} = props;
   return (
     <>
-      {!authStatus ? <button
-        className={`btn`}
-        onClick={() => toggleAuthStatus(true)}
-      >НАЧАТЬ</button> :
+      {!authStatus ?
+        <AuthView toggleAuthStatus={toggleAuthStatus} /> :
         <PlayView />
       }
 

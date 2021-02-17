@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import Hls from "hls.js";
 
 import "./player.scss";
@@ -11,16 +12,15 @@ class Player extends React.PureComponent {
   }
 
   componentDidMount() {
-    this._playVideo();
+    this.playVideo();
   }
 
   componentDidUpdate() {
-    this._playVideo();
+    this.playVideo();
   }
 
-  _playVideo() {
+  playVideo() {
     const {activeLink} = this.props;
-
     if (Hls.isSupported()) {
       const video = this.videoRef.current;
       const hls = new Hls();
@@ -36,7 +36,7 @@ class Player extends React.PureComponent {
         });
       });
       video.controls = true;
-      video.play();
+      // video.play();
     }
   }
 
@@ -47,11 +47,15 @@ class Player extends React.PureComponent {
           ref={this.videoRef}
           id="video"
           width="768"
-          height="512"
+          height="430"
         ></video>
       </div>
     );
   }
 }
+
+Player.propTypes = {
+  activeLink: PropTypes.string.isRequired
+};
 
 export default Player;

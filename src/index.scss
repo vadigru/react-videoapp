@@ -1,5 +1,11 @@
+@font-face {
+  font-family: "OpenSans";
+  src: url('../src/fonts/opensans.woff2');
+}
+
 body {
   background-color: #212121;
+  font-family: "OpenSans", "Arial", sans-serif;
 }
 
 #root {
