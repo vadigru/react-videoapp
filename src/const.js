@@ -6,8 +6,9 @@ export const LINKS = [
 ];
 
 export const VIEW_BUTTONS = [
-  `PLAY_VIEW-1`,
-  `PLAY_VIEW-2`,
+  `VIEW-1`,
+  `VIEW-2`,
+  `VIEW-3`,
 ];
 
 export const DEFAULT_VIEW_TAB = VIEW_BUTTONS[0];

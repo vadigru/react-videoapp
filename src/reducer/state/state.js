@@ -4,18 +4,24 @@ import {
 } from "../../const.js";
 
 const initialState = {
+  activeLink: LINKS[0],
+  links: [...LINKS],
+  showPopup: false,
   unauthorized: false,
-  links: LINKS,
-  activeLink: LINKS[0]
 };
 
 const ActionType = {
-  TOGGLE_AUTH_STATUS: `TOGGLE_AUTH_STATUS`,
+  SET_LINKS: `SET_LINKS`,
   TOGGLE_ACTIVE_LINK: `TOGGLE_ACTIVE_LINK`,
-  SET_LINKS: `SET_LINKS`
+  TOGGLE_AUTH_STATUS: `TOGGLE_AUTH_STATUS`,
+  TOGGLE_POPUP: `TOGGLE_POPUP`
 };
 
 const ActionCreator = {
+  setLinks: (links) => ({
+    type: ActionType.SET_LINKS,
+    payload: links,
+  }),
   toggleAuthStatus: (auth) => ({
     type: ActionType.TOGGLE_AUTH_STATUS,
     payload: auth,
@@ -24,14 +30,18 @@ const ActionCreator = {
     type: ActionType.TOGGLE_ACTIVE_LINK,
     payload: link,
   }),
-  setLinks: (links) => ({
-    type: ActionType.SET_LINKS,
-    payload: links,
+  togglePopup: (popup) => ({
+    type: ActionType.TOGGLE_POPUP,
+    payload: popup,
   }),
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case ActionType.SET_LINKS:
+      return extend(state, {
+        links: [...action.payload],
+      });
     case ActionType.TOGGLE_AUTH_STATUS:
       return extend(state, {
         unauthorized: action.payload,
@@ -40,9 +50,9 @@ const reducer = (state = initialState, action) => {
       return extend(state, {
         activeLink: action.payload,
       });
-    case ActionType.SET_LINKS:
+    case ActionType.TOGGLE_POPUP:
       return extend(state, {
-        links: action.payload,
+        showPopup: action.payload,
       });
   }
   return state;

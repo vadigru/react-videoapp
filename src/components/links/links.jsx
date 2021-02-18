@@ -1,6 +1,7 @@
 import React from "react";
-// import {connect} from "react-redux";
+import {connect} from "react-redux";
 import PropTypes from "prop-types";
+import {ActionCreator} from "../../reducer/state/state.js";
 
 // import {getLinks} from "../../reducer/state/selectors";
 
@@ -10,8 +11,7 @@ class Links extends React.PureComponent {
   constructor(props) {
     super(props);
 
-    this.state = {
-    };
+    this.state = {};
 
     this.props.links.forEach((link, i) => {
       this[`${(i + 1)}`] = React.createRef();
@@ -30,19 +30,33 @@ class Links extends React.PureComponent {
     ref.current.value = ``;
   }
 
-  handleBlur(ref, newLink, link) {
-    ref.current.value = newLink ? newLink : link;
+  handleBlur(ref, inputedLink, link) {
+    ref.current.value = inputedLink ? inputedLink : link;
+  }
+
+  checkUrl(link) {
+    const {toggleActiveLink, togglePopup} = this.props;
+    const showPopup = () => {
+      togglePopup(true);
+    };
+    fetch(link)
+    .then(function (response) {
+      if (response.status > 400) {
+        showPopup();
+      } else {
+        toggleActiveLink(link);
+      }
+    });
   }
 
   render() {
-    const {links, linksChanged, toggleActiveLink} = this.props;
-    console.log(links);
+    const {links} = this.props;
 
     return (
       <div className={`play-links`}>
         <ul className={`play-links links`}>
           {links.map((link, i) => {
-            const newLink = this.state[`link${i + 1}`];
+            const inputedLink = this.state[`link${i + 1}`];
             const inputRef = this[`${i + 1}`];
             return (
               <li
@@ -53,15 +67,15 @@ class Links extends React.PureComponent {
                   ref={inputRef}
                   className={`links__input`}
                   type="text"
-                  value={newLink || link}
+                  value={inputedLink || link}
                   onFocus={() => this.handleFocus(inputRef)}
-                  onBlur={() => this.handleBlur(inputRef, newLink, link)}
+                  onBlur={() => this.handleBlur(inputRef, inputedLink, link)}
                   onInput={(evt) => this.handleInput(evt, `link${i + 1}`)}
                 />
                 <button
                   className={`links__btn`}
-                  onClick={() => toggleActiveLink(newLink || link)}>
-                    PLAY {linksChanged}
+                  onClick={() => this.checkUrl(inputedLink || link)}>
+                    PLAY
                 </button>
               </li>
             );
@@ -75,10 +89,15 @@ class Links extends React.PureComponent {
 Links.propTypes = {
   links: PropTypes.arrayOf(PropTypes.string).isRequired,
   toggleActiveLink: PropTypes.func.isRequired,
+  togglePopup: PropTypes.func.isRequired,
 };
 
 // const mapStateToProps = {};
 
-// const mapDispatchToProps = {};
+const mapDispatchToProps = (dispatch) => ({
+  togglePopup(popup) {
+    return dispatch(ActionCreator.togglePopup(popup));
+  }
+});
 
-export default Links;
+export default connect(null, mapDispatchToProps)(Links);

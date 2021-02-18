@@ -1,21 +1,23 @@
 .play-view {
   width: 768px;
   height: 100vh;
-  // outline: 2px solid orangered;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+  &__wrapper {
+    border: 2px solid whitesmoke;
+    background-color: whitesmoke;
+  }
 }
 
 .menu {
-  position: relative;
+  // position: relative;
   width: 100%;
   margin: 0;
   padding: 0;
   display: flex;
   justify-content: space-evenly;
-  border-bottom: 2px solid white;
 }
 
 .menu__item {
@@ -24,7 +26,19 @@
   list-style-type: none;
   cursor: pointer;
   &:first-child {
-    margin-right: 25px;
+    left: 5%;
   }
+  &:last-child {
+    right: 5%;
+  }
+}
 
+.btn-tab {
+  color: whitesmoke;
+  background-color: #212121;
+  border: 1px solid whitesmoke;
+  &--active {
+    color: #212121;
+    background-color: whitesmoke;
+  }
 }

@@ -13,13 +13,13 @@ import './app.scss';
 
 const App = (props) => {
   const {authStatus, toggleAuthStatus} = props;
+
   return (
     <>
       {!authStatus ?
         <AuthView toggleAuthStatus={toggleAuthStatus} /> :
         <PlayView />
       }
-
     </>
   );
 };

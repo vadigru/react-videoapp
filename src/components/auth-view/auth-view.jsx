@@ -1,14 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+import "./auth-view.scss";
+
 const AuthView = (props) => {
   const {toggleAuthStatus} = props;
 
   return (
     <button
-      className={`btn`}
+      className={`btn btn-start`}
       onClick={() => toggleAuthStatus(true)}
-    >НАЧАТЬ</button>
+    >START</button>
   );
 };
 

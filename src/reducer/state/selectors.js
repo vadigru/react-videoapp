@@ -11,3 +11,7 @@ export const getLinks = (state) => {
 export const getActiveLink = (state) => {
   return state[Namespace.STATE].activeLink;
 };
+
+export const getPopup = (state) => {
+  return state[Namespace.STATE].showPopup;
+};

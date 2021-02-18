@@ -4,11 +4,12 @@ import PropTypes from "prop-types";
 
 import Player from "../player/player.jsx";
 import Links from "../links/links.jsx";
+import ErrorPopup from "../error-popup/error-popup.jsx";
 
-import {getActiveLink, getLinks} from "../../reducer/state/selectors";
+import {getActiveLink, getLinks, getPopup} from "../../reducer/state/selectors";
 import {ActionCreator} from "../../reducer/state/state.js";
 
-import {LINKS, VIEW_BUTTONS, DEFAULT_VIEW_TAB} from "../../const.js";
+import {VIEW_BUTTONS, DEFAULT_VIEW_TAB} from "../../const.js";
 
 import "./play-view.scss";
 
@@ -18,26 +19,23 @@ class PlayView extends React.PureComponent {
 
     this.state = {
       activeTab: DEFAULT_VIEW_TAB.toLocaleLowerCase(),
-      links: LINKS,
-      linksChnaged: false
     };
 
     this.toggleActiveTab = this.toggleActiveTab.bind(this);
   }
 
   toggleActiveTab(name) {
-    let {links} = this.state;
-    links = links.reverse();
+    let {links, setLinks} = this.props;
 
+    setLinks(links.reverse());
     this.setState({
       activeTab: name,
-      links,
-      linksChnaged: !this.state.linksChnaged
     });
   }
 
   render() {
-    const {activeLink, toggleActiveLink} = this.props;
+    const {activeLink, links, toggleActiveLink, showPopup} = this.props;
+
     return (
       <div className={`play-view`}>
         <ul className={`play-view__menu menu`}>
@@ -46,7 +44,7 @@ class PlayView extends React.PureComponent {
               <li key={button + i} className={`menu__item`}>
                 <button
                   name={button.toLocaleLowerCase()}
-                  className={`btn btn${this.state.activeTab === button.toLocaleLowerCase() ? `--active` : ``}`}
+                  className={`btn btn-tab btn-tab${this.state.activeTab === button.toLocaleLowerCase() ? `--active` : ``}`}
                   onClick={(evt) => this.toggleActiveTab(evt.target.name)}
                 >
                   {button}
@@ -55,8 +53,11 @@ class PlayView extends React.PureComponent {
             );
           })}
         </ul>
-        <Player activeLink={activeLink} />
-        <Links links={this.state.links} linksChanged={this.state.linksChnaged} toggleActiveLink={toggleActiveLink} />
+        <div className={`play-view__wrapper`}>
+          <Player activeLink={activeLink} />
+          <Links links={links} toggleActiveLink={toggleActiveLink} />
+        </div>
+        {showPopup ? <ErrorPopup /> : null}
       </div>
     );
   }
@@ -64,17 +65,29 @@ class PlayView extends React.PureComponent {
 
 const mapStateToProps = (state) => ({
   activeLink: getActiveLink(state),
+  links: getLinks(state),
+  showPopup: getPopup(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
+  setLinks(links) {
+    return dispatch(ActionCreator.setLinks(links));
+  },
   toggleActiveLink(link) {
     return dispatch(ActionCreator.toggleActiveLink(link));
   },
+  togglePopup(popup) {
+    return dispatch(ActionCreator.togglePopup(popup));
+  }
 });
 
 PlayView.propTypes = {
   activeLink: PropTypes.string.isRequired,
+  links: PropTypes.arrayOf(PropTypes.string).isRequired,
+  setLinks: PropTypes.func.isRequired,
+  showPopup: PropTypes.bool.isRequired,
   toggleActiveLink: PropTypes.func.isRequired,
+  togglePopup: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PlayView);
