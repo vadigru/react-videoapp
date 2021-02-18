@@ -97,7 +97,7 @@ Links.propTypes = {
 const mapDispatchToProps = (dispatch) => ({
   togglePopup(popup) {
     return dispatch(ActionCreator.togglePopup(popup));
-  }
+  },
 });
 
 export default connect(null, mapDispatchToProps)(Links);

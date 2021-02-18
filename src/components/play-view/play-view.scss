@@ -1,6 +1,6 @@
 .play-view {
   width: 768px;
-  height: 100vh;
+  // height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -33,7 +33,7 @@
   }
 }
 
-.btn-tab {
+.menu__btn {
   color: whitesmoke;
   background-color: #212121;
   border: 1px solid whitesmoke;

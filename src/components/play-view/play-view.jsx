@@ -18,23 +18,49 @@ class PlayView extends React.PureComponent {
     super(props);
 
     this.state = {
-      activeTab: DEFAULT_VIEW_TAB.toLocaleLowerCase(),
+      activeTab: ``,
+      tabToggled: false,
+      showContent: false,
+      localLinks: [...this.props.links]
     };
 
     this.toggleActiveTab = this.toggleActiveTab.bind(this);
   }
 
-  toggleActiveTab(name) {
-    let {links, setLinks} = this.props;
+  componentDidMount() {
+    const {links, toggleActiveLink} = this.props;
 
-    setLinks(links.reverse());
+    toggleActiveLink(links[0]);
+  }
+
+  toggleActiveTab(evt) {
+    const {links} = this.props;
+    const {activeTab} = this.state;
+
+    if (evt.target.name === activeTab) {
+      return;
+    }
+
+    if (evt.target.name === VIEW_BUTTONS[0].toLowerCase()) {
+
+      this.setState({
+        localLinks: [...links].slice()
+      });
+    }
+    if (evt.target.name === VIEW_BUTTONS[1].toLowerCase()) {
+      this.setState({
+        localLinks: [...links].slice().reverse()
+      });
+    }
     this.setState({
-      activeTab: name,
+      activeTab: evt.target.name,
+      showContent: true,
     });
   }
 
   render() {
-    const {activeLink, links, toggleActiveLink, showPopup} = this.props;
+    const {activeLink, toggleActiveLink, showPopup} = this.props;
+    const {activeTab, localLinks} = this.state;
 
     return (
       <div className={`play-view`}>
@@ -44,8 +70,8 @@ class PlayView extends React.PureComponent {
               <li key={button + i} className={`menu__item`}>
                 <button
                   name={button.toLocaleLowerCase()}
-                  className={`btn btn-tab btn-tab${this.state.activeTab === button.toLocaleLowerCase() ? `--active` : ``}`}
-                  onClick={(evt) => this.toggleActiveTab(evt.target.name)}
+                  className={`btn menu__btn menu__btn${activeTab === button.toLocaleLowerCase() ? `--active` : ``}`}
+                  onClick={(evt) => this.toggleActiveTab(evt)}
                 >
                   {button}
                 </button>
@@ -53,10 +79,14 @@ class PlayView extends React.PureComponent {
             );
           })}
         </ul>
-        <div className={`play-view__wrapper`}>
-          <Player activeLink={activeLink} />
-          <Links links={links} toggleActiveLink={toggleActiveLink} />
-        </div>
+
+        {this.state.showContent ?
+          <div className={`play-view__wrapper`}>
+            <Player activeLink={activeLink} />
+            <Links links={localLinks} toggleActiveLink={toggleActiveLink} />
+          </div> :
+          null}
+
         {showPopup ? <ErrorPopup /> : null}
       </div>
     );

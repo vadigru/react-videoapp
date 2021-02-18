@@ -15,9 +15,9 @@ class ErrorPopup extends React.PureComponent {
     return (
       <div className={`error`}>
         <div className={`error__popup`}>
-          <p className={`error__text`}>THIS LINK IS NOT WORKING</p>
+          <p className={`error__text`}>this link is broken</p>
           <button
-            className={`btn error-btn`}
+            className={`btn error__btn`}
             onClick={() => {
               toggleAuthStatus(false);
               togglePopup(false);

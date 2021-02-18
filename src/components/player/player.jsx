@@ -1,6 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Hls from "hls.js";
+// import ReactHlsPlayer from "react-hls-player";
+// import {MediaProvider, Video} from "react-hlsjs";
 
 import "./player.scss";
 
@@ -36,11 +38,17 @@ class Player extends React.PureComponent {
         });
       });
       video.controls = true;
-      // video.play();
+      if (this.props.tabToggled) {
+        video.pause();
+      } else {
+        video.play();
+      }
+
     }
   }
 
   render() {
+    // const {activeLink} = this.props;
     return (
       <div className={`play-view_palyer player`}>
         <video
@@ -49,6 +57,16 @@ class Player extends React.PureComponent {
           width="768"
           height="430"
         ></video>
+        {/* <ReactHlsPlayer
+          url={activeLink}
+          autoplay={false}
+          controls={true}
+          width={768}
+          height={430}
+        /> */}
+        {/* <MediaProvider mediaSource={activeLink} setPlaybackRate={5}>
+          <Video />
+        </MediaProvider> */}
       </div>
     );
   }
