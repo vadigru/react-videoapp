@@ -20,7 +20,7 @@ const ActionType = {
 const ActionCreator = {
   setLinks: (links) => ({
     type: ActionType.SET_LINKS,
-    payload: links,
+    payload: [...links],
   }),
   toggleAuthStatus: (auth) => ({
     type: ActionType.TOGGLE_AUTH_STATUS,
@@ -40,7 +40,7 @@ const reducer = (state = initialState, action) => {
   switch (action.type) {
     case ActionType.SET_LINKS:
       return extend(state, {
-        links: [...action.payload],
+        links: action.payload,
       });
     case ActionType.TOGGLE_AUTH_STATUS:
       return extend(state, {

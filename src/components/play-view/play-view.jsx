@@ -11,17 +11,14 @@ import {ActionCreator} from "../../reducer/state/state.js";
 
 import {VIEW_BUTTONS, DEFAULT_VIEW_TAB} from "../../const.js";
 
-import "./play-view.scss";
-
 class PlayView extends React.PureComponent {
   constructor(props) {
     super(props);
 
     this.state = {
       activeTab: ``,
-      tabToggled: false,
       showContent: false,
-      localLinks: [...this.props.links]
+      defaultTabClicked: false
     };
 
     this.toggleActiveTab = this.toggleActiveTab.bind(this);
@@ -34,23 +31,23 @@ class PlayView extends React.PureComponent {
   }
 
   toggleActiveTab(evt) {
-    const {links} = this.props;
+    const {links, setLinks} = this.props;
     const {activeTab} = this.state;
 
     if (evt.target.name === activeTab) {
       return;
     }
-
-    if (evt.target.name === VIEW_BUTTONS[0].toLowerCase()) {
-
+    if (evt.target.name === VIEW_BUTTONS[0].toLowerCase() && !this.state.defaultTabClicked) {
       this.setState({
-        localLinks: [...links].slice()
+        defaultTabClicked: true
       });
+      setLinks([...links]);
+    }
+    if (evt.target.name === VIEW_BUTTONS[0].toLowerCase() && this.state.defaultTabClicked) {
+      setLinks([...links].slice().reverse());
     }
     if (evt.target.name === VIEW_BUTTONS[1].toLowerCase()) {
-      this.setState({
-        localLinks: [...links].slice().reverse()
-      });
+      setLinks([...links].slice().reverse());
     }
     this.setState({
       activeTab: evt.target.name,
@@ -59,8 +56,8 @@ class PlayView extends React.PureComponent {
   }
 
   render() {
-    const {activeLink, toggleActiveLink, showPopup} = this.props;
-    const {activeTab, localLinks} = this.state;
+    const {activeLink, links, toggleActiveLink, showPopup} = this.props;
+    const {activeTab} = this.state;
 
     return (
       <div className={`play-view`}>
@@ -83,7 +80,7 @@ class PlayView extends React.PureComponent {
         {this.state.showContent ?
           <div className={`play-view__wrapper`}>
             <Player activeLink={activeLink} />
-            <Links links={localLinks} toggleActiveLink={toggleActiveLink} />
+            <Links links={links} toggleActiveLink={toggleActiveLink} />
           </div> :
           null}
 

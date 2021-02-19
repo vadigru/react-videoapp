@@ -6,8 +6,8 @@
   justify-content: flex-start;
   align-items: center;
   &__wrapper {
-    border: 2px solid whitesmoke;
-    background-color: whitesmoke;
+    border: 2px solid $tender-white;
+    background-color: $tender-white;
   }
 }
 
@@ -34,11 +34,11 @@
 }
 
 .menu__btn {
-  color: whitesmoke;
-  background-color: #212121;
-  border: 1px solid whitesmoke;
+  color: $tender-white;
+  background-color: $almost-black;
+  border: 1px solid $tender-white;
   &--active {
-    color: #212121;
-    background-color: whitesmoke;
+    color: $almost-black;
+    background-color: $tender-white;
   }
 }

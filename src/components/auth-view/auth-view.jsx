@@ -1,8 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import "./auth-view.scss";
-
 const AuthView = (props) => {
   const {toggleAuthStatus} = props;
 
@@ -10,7 +8,9 @@ const AuthView = (props) => {
     <button
       className={`btn btn-start`}
       onClick={() => toggleAuthStatus(true)}
-    >START</button>
+    >
+      START
+    </button>
   );
 };
 

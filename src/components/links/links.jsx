@@ -2,10 +2,8 @@ import React from "react";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import {ActionCreator} from "../../reducer/state/state.js";
-
-// import {getLinks} from "../../reducer/state/selectors";
-
-import "./links.scss";
+import {checkUrl} from "../../clientApi.js";
+// import axios from "axios";
 
 class Links extends React.PureComponent {
   constructor(props) {
@@ -26,31 +24,35 @@ class Links extends React.PureComponent {
     });
   }
 
-  handleFocus(ref) {
-    ref.current.value = ``;
-  }
+  // checkUrl(link) {
+  //   const {toggleActiveLink, togglePopup} = this.props;
+  //   const showPopup = () => {
+  //     togglePopup(true);
+  //   };
 
-  handleBlur(ref, inputedLink, link) {
-    ref.current.value = inputedLink ? inputedLink : link;
-  }
+  //   axios.get(link)
+  //     .then((res) => {
+  //       if (res.status < 400) {
+  //         toggleActiveLink(link);
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       if (err) {
+  //         togglePopup(true);
+  //       }
+  //     });
+  // }
 
-  checkUrl(link) {
-    const {toggleActiveLink, togglePopup} = this.props;
-    const showPopup = () => {
-      togglePopup(true);
-    };
-    fetch(link)
-    .then(function (response) {
-      if (response.status > 400) {
-        showPopup();
-      } else {
-        toggleActiveLink(link);
-      }
-    });
-  }
+  // handleFocus(ref, inputedLink, link) {
+  //   ref.current.value = !inputedLink ? link : inputedLink;
+  // }
+
+  // handleBlur(ref, inputedLink, link) {
+  //   ref.current.value = inputedLink ? inputedLink : link;
+  // }
 
   render() {
-    const {links} = this.props;
+    const {links, toggleActiveLink, togglePopup} = this.props;
 
     return (
       <div className={`play-links`}>
@@ -67,14 +69,16 @@ class Links extends React.PureComponent {
                   ref={inputRef}
                   className={`links__input`}
                   type="text"
-                  value={inputedLink || link}
-                  onFocus={() => this.handleFocus(inputRef)}
-                  onBlur={() => this.handleBlur(inputRef, inputedLink, link)}
-                  onInput={(evt) => this.handleInput(evt, `link${i + 1}`)}
+                  value={inputedLink === undefined ? link : inputedLink}
+                  // onFocus={() => this.handleFocus(inputRef, inputedLink, link)}
+                  // onBlur={() => this.handleBlur(inputRef, inputedLink, link)}
+                  onChange={(evt) => this.handleInput(evt, `link${i + 1}`)}
                 />
                 <button
                   className={`links__btn`}
-                  onClick={() => this.checkUrl(inputedLink || link)}>
+                  // onClick={() => checkUrl((inputedLink === undefined ? link : inputedLink), toggleActiveLink, togglePopup)}
+                  onClick={() => checkUrl(inputedLink === undefined ? link : inputedLink).then((data) => data !== false ? toggleActiveLink(data) : togglePopup(true))}
+                >
                     PLAY
                 </button>
               </li>
@@ -91,8 +95,6 @@ Links.propTypes = {
   toggleActiveLink: PropTypes.func.isRequired,
   togglePopup: PropTypes.func.isRequired,
 };
-
-// const mapStateToProps = {};
 
 const mapDispatchToProps = (dispatch) => ({
   togglePopup(popup) {

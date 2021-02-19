@@ -12,8 +12,8 @@
   font-size: 30px;
   color: #212121;
   padding: 15px;
-  border: 1px solid white;
-  background-color: white;
+  border: 1px solid $tender-white;
+  background-color: $tender-white;
   cursor: pointer;
 }
 
@@ -21,7 +21,7 @@
   font-size: 40px;
   color: #212121;
   padding: 10px 25px;
-  background-color: white;
+  background-color: $tender-white;
 }
 
 .links__item {
@@ -35,8 +35,8 @@
 .links__input {
   width: 81%;
   font-size: 30px;
-  color: white;
+  color: $tender-white;
   padding: 15px;
-  border: 1px solid white;
-  background-color: #212121;
+  border: 1px solid $tender-white;
+  background-color: $almost-black;
 }

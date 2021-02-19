@@ -4,8 +4,6 @@ import PropTypes from "prop-types";
 
 import {ActionCreator} from "../../reducer/state/state.js";
 
-import "./error-popup.scss";
-
 class ErrorPopup extends React.PureComponent {
   constructor(props) {
     super(props);
