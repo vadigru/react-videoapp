@@ -7,7 +7,7 @@ export const checkUrl = (link) => {
       return res;
     })
     .catch((err) => {
-      err = err.response.status;
+      err = false;
       return err;
     });
 };

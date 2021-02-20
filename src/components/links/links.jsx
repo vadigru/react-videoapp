@@ -27,16 +27,15 @@ class Links extends PureComponent {
   render() {
     const {links, toggleActiveLink, togglePopup, activeLink} = this.props;
     return (
-      <div className={`play-links`}>
-        <ul className={`play-links links`}>
-          {links.map((link, i) => {
-            const inputedLink = this.state[`link${i + 1}`];
-            const inputRef = this[`${i + 1}`];
-            return (
-              <li
-                className={`links__item`}
-                key={i}>
-                <label className={`links__label`}>{i + 1}</label>
+      <ul className={`play-links links`}>
+        {links.map((link, i) => {
+          const inputedLink = this.state[`link${i + 1}`];
+          const inputRef = this[`${i + 1}`];
+          return (
+            <li
+              className={`links__item`}
+              key={i}>
+              <label className={`links__label`}>
                 <input
                   ref={inputRef}
                   className={`links__input`}
@@ -50,7 +49,7 @@ class Links extends PureComponent {
                     () => {
                       checkUrl(inputedLink === undefined ? link : inputedLink)
                       .then((data) => {
-                        if (data > 400) {
+                        if (!data) {
                           toggleActiveLink(` `);
                           togglePopup(true);
                         } else {
@@ -61,17 +60,17 @@ class Links extends PureComponent {
                   }
                 >
                   {activeLink === (inputedLink === undefined ? link : inputedLink) ?
-                    <div className={`links__playing`}>
-                      <span className={`dot`}></span>
+                    <span className={`links__btn-text`}>
                       PLAY
-                    </div> :
+                      <span className={`dot`}></span>
+                    </span> :
                     `PLAY`}
                 </button>
-              </li>
-            );
-          })}
-        </ul>
-      </div>
+              </label>
+            </li>
+          );
+        })}
+      </ul>
     );
   }
 }
