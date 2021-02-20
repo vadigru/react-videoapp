@@ -1,10 +1,8 @@
-import React from "react";
+import React, {Component} from "react";
 import PropTypes from "prop-types";
 import Hls from "hls.js";
-// import ReactHlsPlayer from "react-hls-player";
-// import {MediaProvider, Video} from "react-hlsjs";
 
-class Player extends React.PureComponent {
+class Player extends Component {
   constructor(props) {
     super(props);
 
@@ -15,8 +13,14 @@ class Player extends React.PureComponent {
     this.playVideo();
   }
 
-  componentDidUpdate() {
-    this.playVideo();
+  componentDidUpdate(nextProps) {
+    const {activeLink} = this.props;
+    if (activeLink === nextProps.activeLink) {
+      this.videoRef.current.pause();
+      return false;
+    }
+
+    return this.playVideo();
   }
 
   playVideo() {
@@ -24,37 +28,27 @@ class Player extends React.PureComponent {
     if (Hls.isSupported()) {
       const video = this.videoRef.current;
       const hls = new Hls();
-      hls.attachMedia(video);
+      if (activeLink !== ``) {
+        hls.attachMedia(video);
+      }
       hls.on(Hls.Events.MEDIA_ATTACHED, function () {
-        console.log(`video and hls.js are now bound together !`);
         hls.loadSource(activeLink);
-        hls.on(Hls.Events.MANIFEST_PARSED, function (event, data) {
-          console.log(
-              `manifest loaded, found ` + data.levels.length + ` quality level`
-          );
-        });
+        // hls.on(Hls.Events.MANIFEST_PARSED, function (event, data) {
+        // });
       });
       video.controls = true;
     }
   }
 
   render() {
-    // const {activeLink} = this.props;
     return (
       <div className={`play-view_palyer player`}>
         <video
           ref={this.videoRef}
+          autoPlay={true}
           id="video"
-          width="768"
-          height="430"
-        ></video>
-        {/* <ReactHlsPlayer
-          url={activeLink}
-          autoplay={false}
-          controls={true}
-          width={768}
-          height={430}
-        /> */}
+          width="100%"
+        />
       </div>
     );
   }

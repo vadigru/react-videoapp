@@ -1,11 +1,11 @@
-import React from "react";
+import React, {PureComponent} from "react";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
+
 import {ActionCreator} from "../../reducer/state/state.js";
 import {checkUrl} from "../../clientApi.js";
-// import axios from "axios";
 
-class Links extends React.PureComponent {
+class Links extends PureComponent {
   constructor(props) {
     super(props);
 
@@ -24,36 +24,8 @@ class Links extends React.PureComponent {
     });
   }
 
-  // checkUrl(link) {
-  //   const {toggleActiveLink, togglePopup} = this.props;
-  //   const showPopup = () => {
-  //     togglePopup(true);
-  //   };
-
-  //   axios.get(link)
-  //     .then((res) => {
-  //       if (res.status < 400) {
-  //         toggleActiveLink(link);
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       if (err) {
-  //         togglePopup(true);
-  //       }
-  //     });
-  // }
-
-  // handleFocus(ref, inputedLink, link) {
-  //   ref.current.value = !inputedLink ? link : inputedLink;
-  // }
-
-  // handleBlur(ref, inputedLink, link) {
-  //   ref.current.value = inputedLink ? inputedLink : link;
-  // }
-
   render() {
-    const {links, toggleActiveLink, togglePopup} = this.props;
-
+    const {links, toggleActiveLink, togglePopup, activeLink} = this.props;
     return (
       <div className={`play-links`}>
         <ul className={`play-links links`}>
@@ -70,16 +42,30 @@ class Links extends React.PureComponent {
                   className={`links__input`}
                   type="text"
                   value={inputedLink === undefined ? link : inputedLink}
-                  // onFocus={() => this.handleFocus(inputRef, inputedLink, link)}
-                  // onBlur={() => this.handleBlur(inputRef, inputedLink, link)}
                   onChange={(evt) => this.handleInput(evt, `link${i + 1}`)}
                 />
                 <button
-                  className={`links__btn`}
-                  // onClick={() => checkUrl((inputedLink === undefined ? link : inputedLink), toggleActiveLink, togglePopup)}
-                  onClick={() => checkUrl(inputedLink === undefined ? link : inputedLink).then((data) => data !== false ? toggleActiveLink(data) : togglePopup(true))}
+                  className={`btn links__btn`}
+                  onClick={
+                    () => {
+                      checkUrl(inputedLink === undefined ? link : inputedLink)
+                      .then((data) => {
+                        if (data > 400) {
+                          toggleActiveLink(` `);
+                          togglePopup(true);
+                        } else {
+                          toggleActiveLink(inputedLink === undefined ? link : inputedLink);
+                        }
+                      });
+                    }
+                  }
                 >
-                    PLAY
+                  {activeLink === (inputedLink === undefined ? link : inputedLink) ?
+                    <div className={`links__playing`}>
+                      <span className={`dot`}></span>
+                      PLAY
+                    </div> :
+                    `PLAY`}
                 </button>
               </li>
             );
@@ -91,6 +77,7 @@ class Links extends React.PureComponent {
 }
 
 Links.propTypes = {
+  activeLink: PropTypes.string.isRequired,
   links: PropTypes.arrayOf(PropTypes.string).isRequired,
   toggleActiveLink: PropTypes.func.isRequired,
   togglePopup: PropTypes.func.isRequired,

@@ -9,8 +9,7 @@
 }
 
 .links__btn {
-  font-size: 30px;
-  color: #212121;
+  color: $almost-black;
   padding: 15px;
   border: 1px solid $tender-white;
   background-color: $tender-white;
@@ -18,7 +17,7 @@
 }
 
 .links__label {
-  font-size: 40px;
+  font-size: inherit;
   color: #212121;
   padding: 10px 25px;
   background-color: $tender-white;
@@ -34,9 +33,38 @@
 
 .links__input {
   width: 81%;
-  font-size: 30px;
+  font-size: inherit;
   color: $tender-white;
   padding: 15px;
   border: 1px solid $tender-white;
+  border-radius: $radius;
   background-color: $almost-black;
 }
+
+@keyframes blink {
+  0% {transform: translateX(0)}
+  50% {transform: translateX(45px)}
+  100% {transform: translateX(0)}
+}
+
+@keyframes blink {
+  0% {opacity: 0}
+  50% {opacity: 1}
+  100% {opacity: 0}
+}
+
+.links__playing {
+  position: relative;
+}
+
+.dot {
+  display: block;
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 50px;
+  height: 5px;
+  background-color: green;
+  animation: blink 1s infinite;
+}
+

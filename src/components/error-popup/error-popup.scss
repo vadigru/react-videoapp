@@ -3,25 +3,25 @@
   height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   position: absolute;
   background-color: rgba($color: $almost-black, $alpha: 0.7);
 }
 
 .error__popup {
   color: $almost-black;
-  width: 40%;
+  width: 600px;
   height: 20%;
-  margin-top: calc(45% - 20%);
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-  background-color: $tender-white;
+  background-color: $winter-grey;
+  border-radius: $radius;
 }
 
 .error__text {
-  font-size: 25px;
+  font-size: inherit;
   text-transform: uppercase;
   margin: 0;
   padding: 0;

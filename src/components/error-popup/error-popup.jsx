@@ -1,10 +1,10 @@
-import React from "react";
+import React, {PureComponent} from "react";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 
 import {ActionCreator} from "../../reducer/state/state.js";
 
-class ErrorPopup extends React.PureComponent {
+class ErrorPopup extends PureComponent {
   constructor(props) {
     super(props);
   }
@@ -13,7 +13,7 @@ class ErrorPopup extends React.PureComponent {
     return (
       <div className={`error`}>
         <div className={`error__popup`}>
-          <p className={`error__text`}>this link is broken</p>
+          <p className={`error__text`}>An error has occurred</p>
           <button
             className={`btn error__btn`}
             onClick={() => {
