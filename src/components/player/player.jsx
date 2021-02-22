@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import PropTypes from "prop-types";
 import Hls from "hls.js";
 
+
 class Player extends Component {
   constructor(props) {
     super(props);
@@ -15,6 +16,7 @@ class Player extends Component {
 
   componentDidUpdate(nextProps) {
     const {activeLink} = this.props;
+
     if (activeLink === nextProps.activeLink) {
       this.videoRef.current.pause();
       return false;
@@ -25,22 +27,27 @@ class Player extends Component {
 
   playVideo() {
     const {activeLink} = this.props;
+
     if (Hls.isSupported()) {
       const video = this.videoRef.current;
       const hls = new Hls();
+
       if (activeLink !== ``) {
         hls.attachMedia(video);
       }
-      hls.on(Hls.Events.MEDIA_ATTACHED, function () {
+
+      hls.on(Hls.Events.MEDIA_ATTACHED, () => {
         hls.loadSource(activeLink);
-        // hls.on(Hls.Events.MANIFEST_PARSED, function (event, data) {
-        // });
       });
+
       video.controls = true;
+      hls.subtitleDisplay = false;
     }
   }
 
   render() {
+    // const {activeLink} = this.props;
+
     return (
       <div className={`play-view_palyer player`}>
         <video
@@ -50,6 +57,7 @@ class Player extends Component {
           width="100%"
         />
       </div>
+
     );
   }
 }

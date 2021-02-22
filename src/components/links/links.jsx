@@ -3,6 +3,7 @@ import {connect} from "react-redux";
 import PropTypes from "prop-types";
 
 import {ActionCreator} from "../../reducer/state/state.js";
+
 import {checkUrl} from "../../clientApi.js";
 
 class Links extends PureComponent {
@@ -10,8 +11,8 @@ class Links extends PureComponent {
     super(props);
 
     this.state = {};
-
-    this.props.links.forEach((link, i) => {
+    this.links = this.props.links || [];
+    this.links.forEach((link, i) => {
       this[`${(i + 1)}`] = React.createRef();
     });
 
@@ -24,40 +25,52 @@ class Links extends PureComponent {
     });
   }
 
+  checkInputedLink(evt, inputedLink, link) {
+    const {
+      toggleActiveLink,
+      toggleErrorPopupStatus
+    } = this.props;
+
+    if (evt.type === `click` || evt.key === `Enter`) {
+      checkUrl(inputedLink === undefined ? link : inputedLink)
+      .then((response) => {
+        if (!response) {
+          toggleErrorPopupStatus(true);
+        } else {
+          toggleActiveLink(inputedLink === undefined ? link : inputedLink);
+        }
+      });
+    }
+  }
+
   render() {
-    const {links, toggleActiveLink, togglePopup, activeLink} = this.props;
+    const {
+      activeLink,
+    } = this.props;
+
     return (
       <ul className={`play-links links`}>
-        {links.map((link, i) => {
+        {this.links.map((link, i) => {
           const inputedLink = this.state[`link${i + 1}`];
           const inputRef = this[`${i + 1}`];
+
           return (
             <li
               className={`links__item`}
               key={i}>
               <label className={`links__label`}>
+                <span className={`links__number`}>{i + 1}</span>
                 <input
                   ref={inputRef}
                   className={`links__input`}
                   type="text"
                   value={inputedLink === undefined ? link : inputedLink}
                   onChange={(evt) => this.handleInput(evt, `link${i + 1}`)}
+                  onKeyPress={(evt) => this.checkInputedLink(evt, inputedLink, link)}
                 />
                 <button
                   className={`btn links__btn`}
-                  onClick={
-                    () => {
-                      checkUrl(inputedLink === undefined ? link : inputedLink)
-                      .then((data) => {
-                        if (!data) {
-                          toggleActiveLink(` `);
-                          togglePopup(true);
-                        } else {
-                          toggleActiveLink(inputedLink === undefined ? link : inputedLink);
-                        }
-                      });
-                    }
-                  }
+                  onClick={(evt) => this.checkInputedLink(evt, inputedLink, link)}
                 >
                   {activeLink === (inputedLink === undefined ? link : inputedLink) ?
                     <span className={`links__btn-text`}>
@@ -77,14 +90,17 @@ class Links extends PureComponent {
 
 Links.propTypes = {
   activeLink: PropTypes.string.isRequired,
-  links: PropTypes.arrayOf(PropTypes.string).isRequired,
+  links: PropTypes.arrayOf(PropTypes.string),
   toggleActiveLink: PropTypes.func.isRequired,
-  togglePopup: PropTypes.func.isRequired,
+  toggleErrorPopupStatus: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  togglePopup(popup) {
-    return dispatch(ActionCreator.togglePopup(popup));
+  toggleActiveLink(link) {
+    return dispatch(ActionCreator.toggleActiveLink(link));
+  },
+  toggleErrorPopupStatus(popup) {
+    return dispatch(ActionCreator.toggleErrorPopupStatus(popup));
   },
 });
 

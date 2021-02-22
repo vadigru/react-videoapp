@@ -8,8 +8,6 @@
   &__wrapper {
     width: 100%;
     background-color: $tender-white;
-    border-bottom-right-radius: $radius;
-    border-bottom-left-radius: $radius;
   }
 }
 
@@ -46,6 +44,7 @@
 }
 
 .menu__btn {
+  white-space: nowrap;
   color: $almost-black;
   border: none;
   background-color: $winter-grey;
@@ -55,4 +54,12 @@
     color: $almost-black;
     background-color: $tender-white;
   }
+}
+
+.play-view__footer {
+  width: 100%;
+  height: 20px;
+  background-color: $winter-grey;
+  border-bottom-left-radius: $radius;
+  border-bottom-RIGHT-radius: $radius;
 }

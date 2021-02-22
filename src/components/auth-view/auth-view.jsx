@@ -1,43 +1,34 @@
-import React, { PureComponent } from "react";
+import React from "react";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 
 import {ActionCreator} from "../../reducer/state/state.js";
 
-class AuthView extends PureComponent {
-  constructor(props) {
-    super(props);
-  }
+const AuthView = (props) => {
+  const {
+    toggleAuthStatus,
+  } = props;
 
-  render() {
-    const {toggleActiveLink, toggleAuthStatus} = this.props;
-
-    return (
-      <button
-        className={`btn btn-start`}
-        onClick={() => {
-          toggleAuthStatus(true);
-          toggleActiveLink(``);
-        }}
-      >
-        START
-      </button>
-    );
-  }
-}
-
-AuthView.propTypes = {
-  toggleActiveLink: PropTypes.func.isRequired,
-  toggleAuthStatus: PropTypes.func.isRequired
+  return (
+    <button
+      className={`btn btn-start`}
+      onClick={() => {
+        toggleAuthStatus(true);
+      }}
+    >
+      START
+    </button>
+  );
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  toggleActiveLink(link) {
-    return dispatch(ActionCreator.toggleActiveLink(link));
-  },
   toggleAuthStatus(auth) {
     return dispatch(ActionCreator.toggleAuthStatus(auth));
   },
 });
+
+AuthView.propTypes = {
+  toggleAuthStatus: PropTypes.func.isRequired,
+};
 
 export default connect(null, mapDispatchToProps)(AuthView);

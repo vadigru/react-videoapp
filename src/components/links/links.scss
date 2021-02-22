@@ -9,44 +9,48 @@
 }
 
 .links__label {
-  width: 100%;
   font-size: inherit;
   color: $almost-black;
+  width: 100%;
+  height: 50px;
   display: flex;
   justify-content: center;
-  background-color: $tender-white;
+  align-items: center;
+}
+
+.links__number {
+  font-size: inherit;
+  width: 10%;
+  height: 52px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-top-left-radius: $radius;
+  border-bottom-left-radius: $radius;
+  background-color: $winter-grey;
 }
 
 .links__input {
-  width: 75%;
+  width: 60%;
+  height: 52px;
+  padding: 0 15px;
   font-size: inherit;
   color: $tender-white;
-  padding: 15px;
-  border-radius: $radius;
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
   background-color: $almost-black;
+  border: none;
 }
 
 .links__btn {
   color: $almost-black;
-  margin-left: -1px;
-  padding: 15px 0;
-  width: 15%;
+  width: 20%;
+  height: 52px;
+  padding: 0;
   background-color: $winter-grey;
   cursor: pointer;
   position: relative;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
-
-}
-
-
-
-@keyframes blink {
-  0% {transform: translateX(0)}
-  50% {transform: translateX(45px)}
-  100% {transform: translateX(0)}
+  box-sizing: border-box
 }
 
 @keyframes blink {

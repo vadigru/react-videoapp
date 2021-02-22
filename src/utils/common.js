@@ -13,7 +13,7 @@ export const shuffleArray = (arr) => {
   let j;
   let k;
   for (let i = arr.length - 1; i > 0; i--) {
-    j = getRandomValue(1, i);
+    j = getRandomValue(0, i);
     k = arr[i];
     arr[i] = arr[j];
     arr[j] = k;
