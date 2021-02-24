@@ -22,9 +22,10 @@ const reducer = (state = initialState, action) => {
   switch (action.type) {
     case ActionType.SET_LINKS:
       return extend(state, {
-        activeLink: action.payload,
+        links: action.payload,
       });
   }
+
   return state;
 };
 

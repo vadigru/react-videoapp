@@ -14,8 +14,8 @@ const Menu = (props) => {
     showPlayer,
   } = props;
 
-  const toggleContentVisibility = (child) => {
-    if (child.props.links) {
+  const toggleShowingContent = (child) => {
+    if (child.props[`data-name`] === `video-links`) {
       showPlayer(true);
     } else {
       showPlayer(false);
@@ -34,7 +34,7 @@ const Menu = (props) => {
               className={`btn menu__btn ${activeTab === child.props.name ? `menu__btn--active` : ``}`}
               onClick={() => {
                 setActiveTab(child.props.name);
-                toggleContentVisibility(child);
+                toggleShowingContent(child);
               }}
             >
               {child.props.name.toUpperCase()}

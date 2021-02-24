@@ -1,18 +1,20 @@
-import React, {PureComponent} from "react";
+import React, {Component} from "react";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 
 import {ActionCreator} from "../../reducer/state/state.js";
-import {getActiveLink} from "../../reducer/state/selectors";
+import {ActionCreator as DataActionCreator} from "../../reducer/data/data.js";
+import {getActiveLink} from "../../reducer/state/selectors.js";
 
 import {checkUrl} from "../../clientApi.js";
 
-class Links extends PureComponent {
+class Links extends Component {
   constructor(props) {
     super(props);
 
     this.state = {};
     this.links = this.props.links || [];
+    this.renderedLinks = [];
     this.links.forEach((link, i) => {
       this[`${(i + 1)}`] = React.createRef();
     });
@@ -20,9 +22,13 @@ class Links extends PureComponent {
     this.handleInput = this.handleInput.bind(this);
   }
 
-  handleInput(evt, link) {
+  componentDidMount() {
+    this.renderedLinks = this.links.map((item) => item);
+  }
+
+  handleInput(evt, input) {
     this.setState({
-      [link]: evt.target.value
+      [input]: evt.target.value
     });
   }
 
@@ -30,6 +36,7 @@ class Links extends PureComponent {
     const {
       setActiveLink,
       showErrorPopup,
+      setLinks,
     } = this.props;
 
     if (evt.type === `click` || evt.key === `Enter`) {
@@ -39,6 +46,8 @@ class Links extends PureComponent {
           showErrorPopup(true);
         } else {
           setActiveLink(inputedLink === undefined ? link : inputedLink);
+          this.renderedLinks.splice(evt.target.dataset.id, 1, inputedLink || link);
+          setLinks(this.renderedLinks);
         }
       });
     }
@@ -50,24 +59,26 @@ class Links extends PureComponent {
     return (
       <ul className={`play-links links`}>
         {this.links.map((link, i) => {
-          const inputedLink = this.state[`link${i + 1}`];
+          const inputedLink = this.state[`input${i + 1}`];
           const inputRef = this[`${i + 1}`];
 
           return (
             <li
               className={`links__item`}
-              key={i}>
+              key={link + i}>
               <label className={`links__label`}>
                 <span className={`links__number`}>{i + 1}</span>
                 <input
                   ref={inputRef}
                   className={`links__input`}
+                  data-id={i}
                   type="text"
                   value={inputedLink === undefined ? link : inputedLink}
-                  onChange={(evt) => this.handleInput(evt, `link${i + 1}`)}
+                  onChange={(evt) => this.handleInput(evt, `input${i + 1}`)}
                   onKeyPress={(evt) => this.checkInputedLink(evt, inputedLink, link)}
                 />
                 <button
+                  data-id={i}
                   className={`btn links__btn`}
                   onClick={(evt) => this.checkInputedLink(evt, inputedLink, link)}
                 >
@@ -91,6 +102,7 @@ Links.propTypes = {
   activeLink: PropTypes.string.isRequired,
   links: PropTypes.arrayOf(PropTypes.string),
   setActiveLink: PropTypes.func.isRequired,
+  setLinks: PropTypes.func.isRequired,
   showErrorPopup: PropTypes.func.isRequired,
 };
 
@@ -104,6 +116,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   showErrorPopup(popup) {
     return dispatch(ActionCreator.showErrorPopup(popup));
+  },
+  setLinks(links) {
+    return dispatch(DataActionCreator.setLinks(links));
   },
 });
 

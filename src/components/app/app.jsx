@@ -6,14 +6,11 @@ import AuthView from "../auth-view/auth-view.jsx";
 import Links from "../links/links.jsx";
 import Main from "../main/main.jsx";
 
-import {getLinks} from "../../reducer/data/selectors.js";
 import {getAuthStatus} from "../../reducer/user/selectors.js";
-import {shuffleArray} from "../../utils/common.js";
 
 const App = (props) => {
   const {
     authStatus,
-    links,
   } = props;
 
   return (
@@ -24,9 +21,9 @@ const App = (props) => {
           <span name={`about`} className={`test-text`}>
             Simple video streaming app written on React and Redux.
           </span>
-          <Links name={`view-1`} links={links}/>
-          <Links name={`view-2`} links={links.slice().reverse()}/>
-          <Links name={`view-3`} links={shuffleArray(links.slice())}/>
+          <Links name={`view-1`} data-name={`video-links`} />
+          <Links name={`view-2`} data-name={`video-links`} data-action={`reverse`} />
+          <Links name={`view-3`} data-name={`video-links`} data-action={`shuffle`} />
         </Main>
       }
     </>
@@ -35,12 +32,10 @@ const App = (props) => {
 
 const mapStateToProps = (state) => ({
   authStatus: getAuthStatus(state),
-  links: getLinks(state),
 });
 
 App.propTypes = {
   authStatus: PropTypes.bool.isRequired,
-  links: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default connect(mapStateToProps, null)(App);

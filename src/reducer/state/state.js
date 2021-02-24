@@ -1,11 +1,12 @@
 import {extend} from "../../utils/common.js";
+import {LINKS} from "../../const.js";
 
 const initialState = {
-  activeLink: ``,
-  activeTab: ``,
+  activeLink: LINKS[0],
+  activeTab: `view-1`,
   isErrorPopupShowing: false,
-  isContentShowing: false,
-  isPlayerShowing: false,
+  isContentShowing: true,
+  isPlayerShowing: true,
 };
 
 const ActionType = {
