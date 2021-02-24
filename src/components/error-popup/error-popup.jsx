@@ -6,23 +6,17 @@ import {ActionCreator} from "../../reducer/state/state.js";
 import {ActionCreator as UserActionCreator} from "../../reducer/user/user.js";
 import {ActionCreator as DataActionCreator} from "../../reducer/data/data.js";
 
-import {LINKS} from "../../const.js";
-
 const ErrorPopup = (props) => {
   const {
-    setActiveLink,
-    setActiveTab,
     setAuthStatus,
-    setLinks,
-    showErrorPopup,
+    resetData,
+    resetState,
   } = props;
 
   const reset = () => {
-    setActiveLink(LINKS[0]);
-    setActiveTab(`view-1`);
+    resetData();
+    resetState();
     setAuthStatus(false);
-    setLinks(LINKS);
-    showErrorPopup(false);
   };
 
   return (
@@ -41,29 +35,21 @@ const ErrorPopup = (props) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  setActiveLink(link) {
-    return dispatch(ActionCreator.setActiveLink(link));
+  resetData() {
+    return dispatch(DataActionCreator.resetData());
   },
-  setActiveTab(tab) {
-    return dispatch(ActionCreator.setActiveTab(tab));
+  resetState() {
+    return dispatch(ActionCreator.resetState());
   },
   setAuthStatus(auth) {
     return dispatch(UserActionCreator.setAuthStatus(auth));
   },
-  showErrorPopup(popup) {
-    return dispatch(ActionCreator.showErrorPopup(popup));
-  },
-  setLinks(links) {
-    return dispatch(DataActionCreator.setLinks(links));
-  },
 });
 
 ErrorPopup.propTypes = {
-  setActiveLink: PropTypes.func.isRequired,
-  setActiveTab: PropTypes.func.isRequired,
+  resetData: PropTypes.func.isRequired,
+  resetState: PropTypes.func.isRequired,
   setAuthStatus: PropTypes.func.isRequired,
-  setLinks: PropTypes.func.isRequired,
-  showErrorPopup: PropTypes.func.isRequired,
 };
 
 export default connect(null, mapDispatchToProps)(ErrorPopup);

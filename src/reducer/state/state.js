@@ -15,6 +15,7 @@ const ActionType = {
   IS_ERROR_POPUP_SHOWING: `IS_ERROR_POPUP_SHOWING`,
   IS_CONTENT_SHOWING: `IS_CONTENT_SHOWING`,
   IS_PLAYER_SHOWING: `IS_PLAYER_SHOWING`,
+  RESET_STATE: `RESET_STATE`,
 };
 
 const ActionCreator = {
@@ -37,6 +38,10 @@ const ActionCreator = {
   showPlayer: (isPlayer) => ({
     type: ActionType.IS_PLAYER_SHOWING,
     payload: isPlayer,
+  }),
+  resetState: () => ({
+    type: ActionType.RESET_STATE,
+    payload: null,
   }),
 };
 
@@ -62,6 +67,8 @@ const reducer = (state = initialState, action) => {
       return extend(state, {
         isPlayerShowing: action.payload,
       });
+    case ActionType.RESET_STATE:
+      return initialState;
   }
   return state;
 };
