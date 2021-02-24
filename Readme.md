@@ -4,8 +4,6 @@ Simple video streaming app written on React and Redux. Designed and developed by
 
 - [Demo](https://react-videoapp.vercel.app/)
 
-## Features
-
 # How to start a project locally:
 Download or clone:
 ```sh
