@@ -1,6 +1,6 @@
 # react-videoapp
 
-Videoapp written on React. Designed and developed by [Vadim Grunenko](https://github.com/vadigru)
+Simple video streaming app written on React and Redux. Designed and developed by [Vadim Grunenko](https://github.com/vadigru)
 
 - [Demo](https://react-videoapp.vercel.app/)
 
