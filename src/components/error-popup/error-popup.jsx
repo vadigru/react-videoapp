@@ -9,14 +9,18 @@ const ErrorPopup = (props) => {
     toggleActiveLink,
     toggleActiveTab,
     toggleAuthStatus,
-    toggleErrorPopupStatus,
+    toggleErrorPopup,
+    toggleShowContent,
+    toggleShowPlayer,
   } = props;
 
   const reset = () => {
-    toggleAuthStatus(false);
-    toggleErrorPopupStatus(false);
     toggleActiveLink(``);
     toggleActiveTab(``);
+    toggleAuthStatus(false);
+    toggleErrorPopup(false);
+    toggleShowContent(false);
+    toggleShowPlayer(false);
   };
 
   return (
@@ -44,8 +48,14 @@ const mapDispatchToProps = (dispatch) => ({
   toggleAuthStatus(auth) {
     return dispatch(ActionCreator.toggleAuthStatus(auth));
   },
-  toggleErrorPopupStatus(popup) {
-    return dispatch(ActionCreator.toggleErrorPopupStatus(popup));
+  toggleErrorPopup(popup) {
+    return dispatch(ActionCreator.toggleErrorPopup(popup));
+  },
+  toggleShowContent(isContent) {
+    return dispatch(ActionCreator.toggleShowContent(isContent));
+  },
+  toggleShowPlayer(isPlayer) {
+    return dispatch(ActionCreator.toggleShowPlayer(isPlayer));
   },
 });
 
@@ -53,7 +63,9 @@ ErrorPopup.propTypes = {
   toggleActiveLink: PropTypes.func.isRequired,
   toggleActiveTab: PropTypes.func.isRequired,
   toggleAuthStatus: PropTypes.func.isRequired,
-  toggleErrorPopupStatus: PropTypes.func.isRequired,
+  toggleErrorPopup: PropTypes.func.isRequired,
+  toggleShowContent: PropTypes.func.isRequired,
+  toggleShowPlayer: PropTypes.func.isRequired,
 };
 
 export default connect(null, mapDispatchToProps)(ErrorPopup);

@@ -11,7 +11,18 @@ const Menu = (props) => {
     activeTab,
     toggleActiveTab,
     toggleShowContent,
+    toggleShowPlayer,
   } = props;
+
+  const toggleContentVisibility = (child) => {
+    if (child.props.links) {
+      toggleShowPlayer(true);
+    } else {
+      toggleShowPlayer(false);
+    }
+
+    toggleShowContent(true);
+  };
 
   return (
     <ul className={`main__menu menu`}>
@@ -23,7 +34,7 @@ const Menu = (props) => {
               className={`btn menu__btn ${activeTab === child.props.name ? `menu__btn--active` : ``}`}
               onClick={() => {
                 toggleActiveTab(child.props.name);
-                toggleShowContent(child);
+                toggleContentVisibility(child);
               }}
             >
               {child.props.name.toUpperCase()}
@@ -43,6 +54,12 @@ const mapDispatchToProps = (dispatch) => ({
   toggleActiveTab(tab) {
     return dispatch(ActionCreator.toggleActiveTab(tab));
   },
+  toggleShowContent(isContent) {
+    return dispatch(ActionCreator.toggleShowContent(isContent));
+  },
+  toggleShowPlayer(isPlayer) {
+    return dispatch(ActionCreator.toggleShowPlayer(isPlayer));
+  },
 });
 
 Menu.propTypes = {
@@ -50,6 +67,7 @@ Menu.propTypes = {
   childrenArray: PropTypes.arrayOf(PropTypes.node).isRequired,
   toggleActiveTab: PropTypes.func.isRequired,
   toggleShowContent: PropTypes.func.isRequired,
+  toggleShowPlayer: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Menu);

@@ -12,7 +12,7 @@ import {shuffleArray} from "../../utils/common.js";
 const App = (props) => {
   const {
     authStatus,
-    links
+    links,
   } = props;
 
   return (
@@ -34,13 +34,12 @@ const App = (props) => {
 
 const mapStateToProps = (state) => ({
   authStatus: getAuthStatus(state),
-  links: getLinks(state)
+  links: getLinks(state),
 });
 
 App.propTypes = {
   authStatus: PropTypes.bool.isRequired,
   links: PropTypes.arrayOf(PropTypes.string).isRequired,
-
 };
 
 export default connect(mapStateToProps, null)(App);

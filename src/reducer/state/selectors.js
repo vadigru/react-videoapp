@@ -12,10 +12,18 @@ export const getLinks = (state) => {
   return state[Namespace.STATE].links;
 };
 
-export const getAuthStatus = (state) => {
-  return state[Namespace.STATE].unauthorized;
+export const getErrorPopup = (state) => {
+  return state[Namespace.STATE].showErrorPopup;
 };
 
-export const getErrorPopupStatus = (state) => {
-  return state[Namespace.STATE].showErrorPopup;
+export const getShowContent = (state) => {
+  return state[Namespace.STATE].showContent;
+};
+
+export const getShowPlayer = (state) => {
+  return state[Namespace.STATE].showPlayer;
+};
+
+export const getAuthStatus = (state) => {
+  return state[Namespace.STATE].unauthorized;
 };

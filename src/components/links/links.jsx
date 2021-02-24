@@ -29,14 +29,14 @@ class Links extends PureComponent {
   checkInputedLink(evt, inputedLink, link) {
     const {
       toggleActiveLink,
-      toggleErrorPopupStatus
+      toggleErrorPopup,
     } = this.props;
 
     if (evt.type === `click` || evt.key === `Enter`) {
       checkUrl(inputedLink === undefined ? link : inputedLink)
       .then((response) => {
         if (!response) {
-          toggleErrorPopupStatus(true);
+          toggleErrorPopup(true);
         } else {
           toggleActiveLink(inputedLink === undefined ? link : inputedLink);
         }
@@ -91,7 +91,7 @@ Links.propTypes = {
   activeLink: PropTypes.string.isRequired,
   links: PropTypes.arrayOf(PropTypes.string),
   toggleActiveLink: PropTypes.func.isRequired,
-  toggleErrorPopupStatus: PropTypes.func.isRequired,
+  toggleErrorPopup: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -102,8 +102,8 @@ const mapDispatchToProps = (dispatch) => ({
   toggleActiveLink(link) {
     return dispatch(ActionCreator.toggleActiveLink(link));
   },
-  toggleErrorPopupStatus(popup) {
-    return dispatch(ActionCreator.toggleErrorPopupStatus(popup));
+  toggleErrorPopup(popup) {
+    return dispatch(ActionCreator.toggleErrorPopup(popup));
   },
 });
 

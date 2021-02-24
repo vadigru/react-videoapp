@@ -10,33 +10,16 @@ import Player from "../player/player.jsx";
 import {
   getActiveLink,
   getActiveTab,
-  getErrorPopupStatus
+  getErrorPopup,
+  getShowContent,
+  getShowPlayer,
 } from "../../reducer/state/selectors";
 
 class Main extends PureComponent {
   constructor(props) {
     super(props);
 
-    this.state = {
-      showContent: false,
-      showPlayer: false
-    };
-
     this.childrenArray = Children.toArray(this.props.children);
-
-    this.toggleShowContent = this.toggleShowContent.bind(this);
-  }
-
-  toggleShowContent(child) {
-    if (child.props.links) {
-      this.setState({showPlayer: true});
-    } else {
-      this.setState({showPlayer: false});
-    }
-
-    this.setState({
-      showContent: true,
-    });
   }
 
   renderLinks(activeTab, childrenArray) {
@@ -56,13 +39,10 @@ class Main extends PureComponent {
     const {
       activeLink,
       activeTab,
-      showErrorPopup
-    } = this.props;
-
-    const {
       showContent,
-      showPlayer
-    } = this.state;
+      showErrorPopup,
+      showPlayer,
+    } = this.props;
 
     return (
       <>
@@ -88,7 +68,9 @@ class Main extends PureComponent {
 const mapStateToProps = (state) => ({
   activeLink: getActiveLink(state),
   activeTab: getActiveTab(state),
-  showErrorPopup: getErrorPopupStatus(state),
+  showErrorPopup: getErrorPopup(state),
+  showContent: getShowContent(state),
+  showPlayer: getShowPlayer(state),
 });
 
 Main.propTypes = {
@@ -96,6 +78,8 @@ Main.propTypes = {
   activeTab: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
   showErrorPopup: PropTypes.bool.isRequired,
+  showContent: PropTypes.bool.isRequired,
+  showPlayer: PropTypes.bool.isRequired,
 };
 
 export default connect(mapStateToProps, null)(Main);
