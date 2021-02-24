@@ -29,5 +29,12 @@
 
 .error__btn {
   color: $tender-white;
+  padding: 10px 25px;
   background-color: $almost-black;
+  border-radius: $radius;
+  &:hover,
+  &:active,
+  &:focus {
+    background-color: $dirty-black;
+  }
 }

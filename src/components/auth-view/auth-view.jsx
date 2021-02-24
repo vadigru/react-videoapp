@@ -5,13 +5,11 @@ import PropTypes from "prop-types";
 import {ActionCreator} from "../../reducer/state/state.js";
 
 const AuthView = (props) => {
-  const {
-    toggleAuthStatus,
-  } = props;
+  const {toggleAuthStatus} = props;
 
   return (
     <button
-      className={`btn btn-start`}
+      className={`btn start-btn`}
       onClick={() => {
         toggleAuthStatus(true);
       }}

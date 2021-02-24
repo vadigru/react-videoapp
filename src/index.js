@@ -9,7 +9,7 @@ import App from "./components/app/app.jsx";
 
 import reducer from "./reducer/reducer.js";
 
-import './sass/main.scss';
+import './sass/style.scss';
 
 const store = createStore(
     reducer,

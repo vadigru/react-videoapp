@@ -55,7 +55,7 @@
     "*.js"
   ],
   "engines": {
-    "node": "12.x"
+    "node": "14.x"
   },
   "externals": {
     "react": "react"
@@ -69,7 +69,6 @@
     "prop-types": "^15.7.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "react-hlsjs": "^1.0.1",
     "react-redux": "^7.2.2",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0"

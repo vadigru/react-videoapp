@@ -2,12 +2,12 @@ import React, {Component} from "react";
 import PropTypes from "prop-types";
 import Hls from "hls.js";
 
-
 class Player extends Component {
   constructor(props) {
     super(props);
 
     this.videoRef = React.createRef();
+    this.hls = new Hls();
   }
 
   componentDidMount() {
@@ -25,45 +25,45 @@ class Player extends Component {
     return this.playVideo();
   }
 
+  componentWillUnmount() {
+    if (this.hls) {
+      this.hls.destroy();
+    }
+  }
+
   playVideo() {
     const {activeLink} = this.props;
+    const video = this.videoRef.current;
 
     if (Hls.isSupported()) {
-      const video = this.videoRef.current;
-      const hls = new Hls();
-
       if (activeLink !== ``) {
-        hls.attachMedia(video);
+        this.hls.loadSource(activeLink);
+        this.hls.attachMedia(video);
+        this.hls.on(Hls.Events.MANIFEST_PARSED, () => {
+          video.play();
+        });
       }
 
-      hls.on(Hls.Events.MEDIA_ATTACHED, () => {
-        hls.loadSource(activeLink);
-      });
-
       video.controls = true;
-      hls.subtitleDisplay = false;
+      this.hls.subtitleDisplay = false;
     }
   }
 
   render() {
-    // const {activeLink} = this.props;
-
     return (
-      <div className={`play-view_palyer player`}>
+      <div className={`player`}>
         <video
           ref={this.videoRef}
-          autoPlay={true}
           id="video"
           width="100%"
         />
       </div>
-
     );
   }
 }
 
 Player.propTypes = {
-  activeLink: PropTypes.string.isRequired
+  activeLink: PropTypes.string.isRequired,
 };
 
 export default Player;

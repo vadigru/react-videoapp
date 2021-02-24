@@ -1,0 +1,13 @@
+.main {
+  width: 768px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.main__wrapper {
+  width: 100%;
+  background-color: $tender-white;
+}

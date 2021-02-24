@@ -4,6 +4,10 @@ export const getActiveLink = (state) => {
   return state[Namespace.STATE].activeLink;
 };
 
+export const getActiveTab = (state) => {
+  return state[Namespace.STATE].activeTab;
+};
+
 export const getLinks = (state) => {
   return state[Namespace.STATE].links;
 };

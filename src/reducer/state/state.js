@@ -4,7 +4,8 @@ import {
 } from "../../const.js";
 
 const initialState = {
-  activeLink: LINKS[0],
+  activeLink: ``,
+  activeTab: ``,
   links: LINKS,
   showErrorPopup: false,
   unauthorized: false,
@@ -12,6 +13,7 @@ const initialState = {
 
 const ActionType = {
   TOGGLE_ACTIVE_LINK: `TOGGLE_ACTIVE_LINK`,
+  TOGGLE_ACTIVE_TAB: `TOGGLE_ACTIVE_TAB`,
   TOGGLE_AUTH_STATUS: `TOGGLE_AUTH_STATUS`,
   SHOW_ERROR_POPUP: `SHOW_ERROR_POPUP`
 };
@@ -24,6 +26,10 @@ const ActionCreator = {
   toggleActiveLink: (link) => ({
     type: ActionType.TOGGLE_ACTIVE_LINK,
     payload: link,
+  }),
+  toggleActiveTab: (tab) => ({
+    type: ActionType.TOGGLE_ACTIVE_TAB,
+    payload: tab,
   }),
   toggleErrorPopupStatus: (popup) => ({
     type: ActionType.SHOW_ERROR_POPUP,
@@ -45,7 +51,10 @@ const reducer = (state = initialState, action) => {
       return extend(state, {
         activeLink: action.payload,
       });
-
+    case ActionType.TOGGLE_ACTIVE_TAB:
+      return extend(state, {
+        activeTab: action.payload,
+      });
   }
   return state;
 };

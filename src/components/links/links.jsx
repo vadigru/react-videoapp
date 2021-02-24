@@ -3,6 +3,7 @@ import {connect} from "react-redux";
 import PropTypes from "prop-types";
 
 import {ActionCreator} from "../../reducer/state/state.js";
+import {getActiveLink} from "../../reducer/state/selectors";
 
 import {checkUrl} from "../../clientApi.js";
 
@@ -44,9 +45,7 @@ class Links extends PureComponent {
   }
 
   render() {
-    const {
-      activeLink,
-    } = this.props;
+    const {activeLink} = this.props;
 
     return (
       <ul className={`play-links links`}>
@@ -72,7 +71,7 @@ class Links extends PureComponent {
                   className={`btn links__btn`}
                   onClick={(evt) => this.checkInputedLink(evt, inputedLink, link)}
                 >
-                  {activeLink === (inputedLink === undefined ? link : inputedLink) ?
+                  {activeLink === (inputedLink === undefined ? link : inputedLink) && inputedLink !== `` ?
                     <span className={`links__btn-text`}>
                       PLAY
                       <span className={`dot`}></span>
@@ -95,6 +94,10 @@ Links.propTypes = {
   toggleErrorPopupStatus: PropTypes.func.isRequired,
 };
 
+const mapStateToProps = (state) => ({
+  activeLink: getActiveLink(state),
+});
+
 const mapDispatchToProps = (dispatch) => ({
   toggleActiveLink(link) {
     return dispatch(ActionCreator.toggleActiveLink(link));
@@ -104,4 +107,4 @@ const mapDispatchToProps = (dispatch) => ({
   },
 });
 
-export default connect(null, mapDispatchToProps)(Links);
+export default connect(mapStateToProps, mapDispatchToProps)(Links);
