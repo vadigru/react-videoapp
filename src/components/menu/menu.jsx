@@ -9,19 +9,19 @@ const Menu = (props) => {
   const {
     childrenArray,
     activeTab,
-    toggleActiveTab,
-    toggleShowContent,
-    toggleShowPlayer,
+    setActiveTab,
+    showContent,
+    showPlayer,
   } = props;
 
   const toggleContentVisibility = (child) => {
     if (child.props.links) {
-      toggleShowPlayer(true);
+      showPlayer(true);
     } else {
-      toggleShowPlayer(false);
+      showPlayer(false);
     }
 
-    toggleShowContent(true);
+    showContent(true);
   };
 
   return (
@@ -33,7 +33,7 @@ const Menu = (props) => {
               name={child.props.name}
               className={`btn menu__btn ${activeTab === child.props.name ? `menu__btn--active` : ``}`}
               onClick={() => {
-                toggleActiveTab(child.props.name);
+                setActiveTab(child.props.name);
                 toggleContentVisibility(child);
               }}
             >
@@ -51,23 +51,23 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  toggleActiveTab(tab) {
-    return dispatch(ActionCreator.toggleActiveTab(tab));
+  setActiveTab(tab) {
+    return dispatch(ActionCreator.setActiveTab(tab));
   },
-  toggleShowContent(isContent) {
-    return dispatch(ActionCreator.toggleShowContent(isContent));
+  showContent(isContent) {
+    return dispatch(ActionCreator.showContent(isContent));
   },
-  toggleShowPlayer(isPlayer) {
-    return dispatch(ActionCreator.toggleShowPlayer(isPlayer));
+  showPlayer(isPlayer) {
+    return dispatch(ActionCreator.showPlayer(isPlayer));
   },
 });
 
 Menu.propTypes = {
   activeTab: PropTypes.string.isRequired,
   childrenArray: PropTypes.arrayOf(PropTypes.node).isRequired,
-  toggleActiveTab: PropTypes.func.isRequired,
-  toggleShowContent: PropTypes.func.isRequired,
-  toggleShowPlayer: PropTypes.func.isRequired,
+  setActiveTab: PropTypes.func.isRequired,
+  showContent: PropTypes.func.isRequired,
+  showPlayer: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Menu);

@@ -11,8 +11,8 @@ import {
   getActiveLink,
   getActiveTab,
   getErrorPopup,
-  getShowContent,
-  getShowPlayer,
+  getShowingContent,
+  getShowingPlayer,
 } from "../../reducer/state/selectors";
 
 class Main extends PureComponent {
@@ -39,9 +39,9 @@ class Main extends PureComponent {
     const {
       activeLink,
       activeTab,
-      showContent,
-      showErrorPopup,
-      showPlayer,
+      isContentShowing,
+      isErrorPopupShowing,
+      isPlayerShowing,
     } = this.props;
 
     return (
@@ -51,15 +51,15 @@ class Main extends PureComponent {
             childrenArray={this.childrenArray}
             toggleShowContent={this.toggleShowContent}
           />
-          {showContent ?
+          {isContentShowing ?
             <div className={`main__wrapper`}>
-              {showPlayer ? <Player activeLink={activeLink} /> : null}
+              {isPlayerShowing ? <Player activeLink={activeLink} /> : null}
               {this.renderLinks(activeTab, this.childrenArray, activeLink)}
             </div> :
             null}
           <Footer />
         </div>
-        {showErrorPopup ? <ErrorPopup /> : null}
+        {isErrorPopupShowing ? <ErrorPopup /> : null}
       </>
     );
   }
@@ -68,18 +68,18 @@ class Main extends PureComponent {
 const mapStateToProps = (state) => ({
   activeLink: getActiveLink(state),
   activeTab: getActiveTab(state),
-  showErrorPopup: getErrorPopup(state),
-  showContent: getShowContent(state),
-  showPlayer: getShowPlayer(state),
+  isErrorPopupShowing: getErrorPopup(state),
+  isContentShowing: getShowingContent(state),
+  isPlayerShowing: getShowingPlayer(state),
 });
 
 Main.propTypes = {
   activeLink: PropTypes.string.isRequired,
   activeTab: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
-  showErrorPopup: PropTypes.bool.isRequired,
-  showContent: PropTypes.bool.isRequired,
-  showPlayer: PropTypes.bool.isRequired,
+  isErrorPopupShowing: PropTypes.bool.isRequired,
+  isContentShowing: PropTypes.bool.isRequired,
+  isPlayerShowing: PropTypes.bool.isRequired,
 };
 
 export default connect(mapStateToProps, null)(Main);

@@ -2,16 +2,16 @@ import React from "react";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 
-import {ActionCreator} from "../../reducer/state/state.js";
+import {ActionCreator} from "../../reducer/user/user.js";
 
 const AuthView = (props) => {
-  const {toggleAuthStatus} = props;
+  const {setAuthStatus} = props;
 
   return (
     <button
       className={`btn start-btn`}
       onClick={() => {
-        toggleAuthStatus(true);
+        setAuthStatus(true);
       }}
     >
       START
@@ -20,13 +20,13 @@ const AuthView = (props) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  toggleAuthStatus(auth) {
-    return dispatch(ActionCreator.toggleAuthStatus(auth));
+  setAuthStatus(auth) {
+    return dispatch(ActionCreator.setAuthStatus(auth));
   },
 });
 
 AuthView.propTypes = {
-  toggleAuthStatus: PropTypes.func.isRequired,
+  setAuthStatus: PropTypes.func.isRequired,
 };
 
 export default connect(null, mapDispatchToProps)(AuthView);

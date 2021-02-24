@@ -28,17 +28,17 @@ class Links extends PureComponent {
 
   checkInputedLink(evt, inputedLink, link) {
     const {
-      toggleActiveLink,
-      toggleErrorPopup,
+      setActiveLink,
+      showErrorPopup,
     } = this.props;
 
     if (evt.type === `click` || evt.key === `Enter`) {
       checkUrl(inputedLink === undefined ? link : inputedLink)
       .then((response) => {
         if (!response) {
-          toggleErrorPopup(true);
+          showErrorPopup(true);
         } else {
-          toggleActiveLink(inputedLink === undefined ? link : inputedLink);
+          setActiveLink(inputedLink === undefined ? link : inputedLink);
         }
       });
     }
@@ -90,8 +90,8 @@ class Links extends PureComponent {
 Links.propTypes = {
   activeLink: PropTypes.string.isRequired,
   links: PropTypes.arrayOf(PropTypes.string),
-  toggleActiveLink: PropTypes.func.isRequired,
-  toggleErrorPopup: PropTypes.func.isRequired,
+  setActiveLink: PropTypes.func.isRequired,
+  showErrorPopup: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -99,11 +99,11 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  toggleActiveLink(link) {
-    return dispatch(ActionCreator.toggleActiveLink(link));
+  setActiveLink(link) {
+    return dispatch(ActionCreator.setActiveLink(link));
   },
-  toggleErrorPopup(popup) {
-    return dispatch(ActionCreator.toggleErrorPopup(popup));
+  showErrorPopup(popup) {
+    return dispatch(ActionCreator.showErrorPopup(popup));
   },
 });
 

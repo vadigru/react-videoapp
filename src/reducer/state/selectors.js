@@ -8,22 +8,14 @@ export const getActiveTab = (state) => {
   return state[Namespace.STATE].activeTab;
 };
 
-export const getLinks = (state) => {
-  return state[Namespace.STATE].links;
-};
-
 export const getErrorPopup = (state) => {
-  return state[Namespace.STATE].showErrorPopup;
+  return state[Namespace.STATE].isErrorPopupShowing;
 };
 
-export const getShowContent = (state) => {
-  return state[Namespace.STATE].showContent;
+export const getShowingContent = (state) => {
+  return state[Namespace.STATE].isContentShowing;
 };
 
-export const getShowPlayer = (state) => {
-  return state[Namespace.STATE].showPlayer;
-};
-
-export const getAuthStatus = (state) => {
-  return state[Namespace.STATE].unauthorized;
+export const getShowingPlayer = (state) => {
+  return state[Namespace.STATE].isPlayerShowing;
 };

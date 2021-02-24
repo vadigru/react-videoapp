@@ -3,24 +3,25 @@ import {connect} from "react-redux";
 import PropTypes from "prop-types";
 
 import {ActionCreator} from "../../reducer/state/state.js";
+import {ActionCreator as UserActionCreator} from "../../reducer/user/user.js";
 
 const ErrorPopup = (props) => {
   const {
-    toggleActiveLink,
-    toggleActiveTab,
-    toggleAuthStatus,
-    toggleErrorPopup,
-    toggleShowContent,
-    toggleShowPlayer,
+    setActiveLink,
+    setActiveTab,
+    setAuthStatus,
+    showErrorPopup,
+    showContent,
+    showPlayer,
   } = props;
 
   const reset = () => {
-    toggleActiveLink(``);
-    toggleActiveTab(``);
-    toggleAuthStatus(false);
-    toggleErrorPopup(false);
-    toggleShowContent(false);
-    toggleShowPlayer(false);
+    setActiveLink(``);
+    setActiveTab(``);
+    setAuthStatus(false);
+    showErrorPopup(false);
+    showContent(false);
+    showPlayer(false);
   };
 
   return (
@@ -39,33 +40,33 @@ const ErrorPopup = (props) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  toggleActiveLink(link) {
-    return dispatch(ActionCreator.toggleActiveLink(link));
+  setActiveLink(link) {
+    return dispatch(ActionCreator.setActiveLink(link));
   },
-  toggleActiveTab(tab) {
-    return dispatch(ActionCreator.toggleActiveTab(tab));
+  setActiveTab(tab) {
+    return dispatch(ActionCreator.setActiveTab(tab));
   },
-  toggleAuthStatus(auth) {
-    return dispatch(ActionCreator.toggleAuthStatus(auth));
+  setAuthStatus(auth) {
+    return dispatch(UserActionCreator.setAuthStatus(auth));
   },
-  toggleErrorPopup(popup) {
-    return dispatch(ActionCreator.toggleErrorPopup(popup));
+  showErrorPopup(popup) {
+    return dispatch(ActionCreator.showErrorPopup(popup));
   },
-  toggleShowContent(isContent) {
-    return dispatch(ActionCreator.toggleShowContent(isContent));
+  showContent(isContent) {
+    return dispatch(ActionCreator.showContent(isContent));
   },
-  toggleShowPlayer(isPlayer) {
-    return dispatch(ActionCreator.toggleShowPlayer(isPlayer));
+  showPlayer(isPlayer) {
+    return dispatch(ActionCreator.showPlayer(isPlayer));
   },
 });
 
 ErrorPopup.propTypes = {
-  toggleActiveLink: PropTypes.func.isRequired,
-  toggleActiveTab: PropTypes.func.isRequired,
-  toggleAuthStatus: PropTypes.func.isRequired,
-  toggleErrorPopup: PropTypes.func.isRequired,
-  toggleShowContent: PropTypes.func.isRequired,
-  toggleShowPlayer: PropTypes.func.isRequired,
+  setActiveLink: PropTypes.func.isRequired,
+  setActiveTab: PropTypes.func.isRequired,
+  setAuthStatus: PropTypes.func.isRequired,
+  showErrorPopup: PropTypes.func.isRequired,
+  showContent: PropTypes.func.isRequired,
+  showPlayer: PropTypes.func.isRequired,
 };
 
 export default connect(null, mapDispatchToProps)(ErrorPopup);

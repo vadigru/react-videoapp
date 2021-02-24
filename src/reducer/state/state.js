@@ -1,79 +1,65 @@
 import {extend} from "../../utils/common.js";
-import {
-  LINKS
-} from "../../const.js";
 
 const initialState = {
   activeLink: ``,
   activeTab: ``,
-  links: LINKS,
-  showErrorPopup: false,
-  showContent: false,
-  showPlayer: false,
-  unauthorized: false,
+  isErrorPopupShowing: false,
+  isContentShowing: false,
+  isPlayerShowing: false,
 };
 
 const ActionType = {
-  TOGGLE_ACTIVE_LINK: `TOGGLE_ACTIVE_LINK`,
-  TOGGLE_ACTIVE_TAB: `TOGGLE_ACTIVE_TAB`,
-  TOGGLE_AUTH_STATUS: `TOGGLE_AUTH_STATUS`,
-  TOGGLE_ERROR_POPUP: `TOGGLE_ERROR_POPUP`,
-  TOGGLE_SHOW_CONTENT: `TOGGLE_SHOW_CONTENT`,
-  TOGGLE_SHOW_PLAYER: `TOGGLE_SHOW_PLAYER`,
+  SET_ACTIVE_LINK: `SET_ACTIVE_LINK`,
+  SET_ACTIVE_TAB: `SET_ACTIVE_TAB`,
+  IS_ERROR_POPUP_SHOWING: `IS_ERROR_POPUP_SHOWING`,
+  IS_CONTENT_SHOWING: `IS_CONTENT_SHOWING`,
+  IS_PLAYER_SHOWING: `IS_PLAYER_SHOWING`,
 };
 
 const ActionCreator = {
-  toggleActiveLink: (link) => ({
-    type: ActionType.TOGGLE_ACTIVE_LINK,
+  setActiveLink: (link) => ({
+    type: ActionType.SET_ACTIVE_LINK,
     payload: link,
   }),
-  toggleActiveTab: (tab) => ({
-    type: ActionType.TOGGLE_ACTIVE_TAB,
+  setActiveTab: (tab) => ({
+    type: ActionType.SET_ACTIVE_TAB,
     payload: tab,
   }),
-  toggleAuthStatus: (auth) => ({
-    type: ActionType.TOGGLE_AUTH_STATUS,
-    payload: auth,
-  }),
-  toggleErrorPopup: (isPopup) => ({
-    type: ActionType.TOGGLE_ERROR_POPUP,
+  showErrorPopup: (isPopup) => ({
+    type: ActionType.IS_ERROR_POPUP_SHOWING,
     payload: isPopup,
   }),
-  toggleShowContent: (isContent) => ({
-    type: ActionType.TOGGLE_SHOW_CONTENT,
+  showContent: (isContent) => ({
+    type: ActionType.IS_CONTENT_SHOWING,
     payload: isContent,
   }),
-  toggleShowPlayer: (isPlayer) => ({
-    type: ActionType.TOGGLE_SHOW_PLAYER,
+  showPlayer: (isPlayer) => ({
+    type: ActionType.IS_PLAYER_SHOWING,
     payload: isPlayer,
   }),
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case ActionType.TOGGLE_ACTIVE_LINK:
+    case ActionType.SET_ACTIVE_LINK:
       return extend(state, {
         activeLink: action.payload,
       });
-    case ActionType.TOGGLE_ACTIVE_TAB:
+    case ActionType.SET_ACTIVE_TAB:
       return extend(state, {
         activeTab: action.payload,
       });
-    case ActionType.TOGGLE_AUTH_STATUS:
+    case ActionType.IS_ERROR_POPUP_SHOWING:
       return extend(state, {
-        unauthorized: action.payload,
+        isErrorPopupShowing: action.payload,
       });
-    case ActionType.TOGGLE_ERROR_POPUP:
+    case ActionType.IS_CONTENT_SHOWING:
       return extend(state, {
-        showErrorPopup: action.payload,
+        isContentShowing: action.payload,
       });
-    case ActionType.TOGGLE_SHOW_CONTENT:
+    case ActionType.IS_PLAYER_SHOWING:
       return extend(state, {
-        showContent: action.payload,
-      });
-    case ActionType.TOGGLE_SHOW_PLAYER:
-      return extend(state, {
-        showPlayer: action.payload,
+        isPlayerShowing: action.payload,
       });
   }
   return state;

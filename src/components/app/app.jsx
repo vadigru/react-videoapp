@@ -6,7 +6,8 @@ import AuthView from "../auth-view/auth-view.jsx";
 import Links from "../links/links.jsx";
 import Main from "../main/main.jsx";
 
-import {getAuthStatus, getLinks} from "../../reducer/state/selectors";
+import {getLinks} from "../../reducer/data/selectors.js";
+import {getAuthStatus} from "../../reducer/user/selectors.js";
 import {shuffleArray} from "../../utils/common.js";
 
 const App = (props) => {
