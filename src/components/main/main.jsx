@@ -50,13 +50,15 @@ class Main extends PureComponent {
     return childrenArray.map((child, i) => {
       const newLinks = this.switchLinks(child.props[`data-action`], links);
       const newChild = cloneElement(child, {links: newLinks});
+
       if (child.props.name === activeTab) {
         return (
           <div key={child.props.name + i}>
-            {newChild}
+            {child.props.links ? child : newChild}
           </div>
         );
       }
+
       return false;
     });
   }
