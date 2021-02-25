@@ -16,7 +16,7 @@ class Links extends Component {
     this.links = this.props.links || [];
     this.renderedLinks = [];
     this.links.forEach((link, i) => {
-      this[`${(i + 1)}`] = React.createRef();
+      this[`${i + 1}`] = React.createRef();
     });
 
     this.handleInput = this.handleInput.bind(this);
@@ -26,9 +26,9 @@ class Links extends Component {
     this.renderedLinks = this.links.map((item) => item);
   }
 
-  handleInput(evt, input) {
+  handleInput(evt, inputKey) {
     this.setState({
-      [input]: evt.target.value
+      [inputKey]: evt.target.value
     });
   }
 
@@ -38,14 +38,15 @@ class Links extends Component {
       showErrorPopup,
       setLinks,
     } = this.props;
+    const selectedLink = inputedLink === undefined ? link : inputedLink;
 
     if (evt.type === `click` || evt.key === `Enter`) {
-      checkUrl(inputedLink === undefined ? link : inputedLink)
+      checkUrl(selectedLink)
       .then((response) => {
         if (!response) {
           showErrorPopup(true);
         } else {
-          setActiveLink(inputedLink === undefined ? link : inputedLink);
+          setActiveLink(selectedLink);
           this.renderedLinks.splice(evt.target.dataset.id, 1, inputedLink || link);
           setLinks(this.renderedLinks);
         }
@@ -59,8 +60,10 @@ class Links extends Component {
     return (
       <ul className={`play-links links`}>
         {this.links.map((link, i) => {
-          const inputedLink = this.state[`input${i + 1}`];
+          const inputKey = `input${i + 1}`;
           const inputRef = this[`${i + 1}`];
+          const inputedLink = this.state[inputKey];
+          const selectedLink = inputedLink === undefined ? link : inputedLink;
 
           return (
             <li
@@ -73,8 +76,8 @@ class Links extends Component {
                   className={`links__input`}
                   data-id={i}
                   type="text"
-                  value={inputedLink === undefined ? link : inputedLink}
-                  onChange={(evt) => this.handleInput(evt, `input${i + 1}`)}
+                  value={selectedLink}
+                  onChange={(evt) => this.handleInput(evt, inputKey)}
                   onKeyPress={(evt) => this.checkInputedLink(evt, inputedLink, link)}
                 />
                 <button
@@ -82,7 +85,7 @@ class Links extends Component {
                   className={`btn links__btn`}
                   onClick={(evt) => this.checkInputedLink(evt, inputedLink, link)}
                 >
-                  {activeLink === (inputedLink === undefined ? link : inputedLink) && inputedLink !== `` ?
+                  {activeLink === selectedLink && inputedLink !== `` ?
                     <span className={`links__btn-text`}>
                       PLAY
                       <span className={`dot`}></span>
