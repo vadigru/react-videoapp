@@ -29,6 +29,36 @@ class Main extends PureComponent {
     };
   }
 
+  onInput(e) {
+    if (e.code === `Enter`) {
+      alert(`this is enter`)
+    }
+    if (e.code === `Space`) {
+      alert(`this is space`);
+    }
+    if (this.error) {
+      return this.error.onInput(e);
+    }
+  }
+
+  onKeyDown = (e) => {
+    return this.onInput(e);
+  }
+
+  onKeyUp = (e) => {
+    return this.onInput(e);
+  }
+
+  componentDidMount() {
+    document.addEventListener(`keydown`, this.onKeyDown, true);
+    document.addEventListener(`keyup`, this.onKeyUp, true);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener(`keydown`, this.onKeyDown, true);
+    document.removeEventListener(`keyup`, this.onKeyUp, true);
+  }
+
   switchLinks(action, links) {
     switch (action) {
       case this.linksActionMap.REVERSE:
@@ -38,7 +68,7 @@ class Main extends PureComponent {
         links = shuffleArray(links.slice());
         break;
       default:
-        links = links;
+        links;
         break;
     }
     return links;
@@ -94,7 +124,7 @@ class Main extends PureComponent {
             null}
           <Footer />
         </div>
-        {isErrorPopupShowing ? <ErrorPopup /> : null}
+        {isErrorPopupShowing ? <ErrorPopup ref={(el) => (this.error = el)} key="t" /> : null}
       </>
     );
   }

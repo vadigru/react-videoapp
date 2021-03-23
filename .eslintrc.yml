@@ -1,19 +1,43 @@
+parser: babel-eslint
 env:
   es6: true
   browser: true
   commonjs: true
   jest: true
 
-extends: ['htmlacademy/es6', 'plugin:react/recommended']
+extends: [
+    eslint:recommended,
+    plugin:react/recommended
+  ]
 
 parserOptions:
   ecmaFeatures:
-    jsx: true
+    {
+      arrowFunctions: true,
+      blockBindings: true,
+      classes: true,
+      defaultParams: true,
+      destructuring: true,
+      forOf: true,
+      generators: false,
+      modules: true,
+      objectLiteralComputedProperties: true,
+      objectLiteralDuplicateProperties: false,
+      objectLiteralShorthandMethods: true,
+      objectLiteralShorthandProperties: true,
+      restParams: true,
+      spread: true,
+      superInFunctions: true,
+      templateStrings: true,
+      jsx: true
+    }
   ecmaVersion: 6
   sourceType: module
 
-plugins: ['react']
+plugins: [
+  react
+]
 
 settings:
   react:
-    version: '16'
+    version: detect
