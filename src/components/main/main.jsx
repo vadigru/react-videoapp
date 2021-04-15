@@ -41,7 +41,7 @@ class Main extends PureComponent {
     }
   }
 
-  onKeyDown = (e) => {
+  onKeyDown = (e) => { // или = (e) => или this.onKeyDown = this.onKeyDown.bind(this) в конструкторе
     return this.onInput(e);
   }
 
